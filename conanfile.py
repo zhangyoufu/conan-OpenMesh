@@ -61,10 +61,10 @@ class OpenMeshConan(ConanFile):
         cmake.install()
 
     def package_info(self):
-        if self.settings.os == 'Windows':
+        if self.settings.compiler == 'Visual Studio':
             # this is required by OpenMesh/Core/System/compiler.hh
             self.cpp_info.defines += ['_USE_MATH_DEFINES']
-            if self.options.shared:
-                # this is required for OPENMESHDLLEXPORT
-                self.cpp_info.defines += ['OPENMESHDLL']
+        if self.settings.os == 'Windows' and self.options.shared:
+            # this is required for OPENMESHDLLEXPORT
+            self.cpp_info.defines += ['OPENMESHDLL']
         self.cpp_info.libs = tools.collect_libs(self)
